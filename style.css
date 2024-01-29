@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+:root {
+    --grey: rgb(204, 204, 204);
+    --keyboard-backg: rgb(238, 238, 238);
+    --key-backg: rgb(252, 252, 252);
+    --key-border: rgb(70, 70, 70);
+    --key-border-dark: rgb(10, 10, 10);
+    --key-shadow: rgb(204, 204, 204);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow: hidden;
+    /* background-image: linear-gradient(to right, #434343 0%, black 100%); */
+    background-image: linear-gradient(to right, #ececec 0%, #fff 100%);
+}
+
+#parent-container {
+    width: 100%;
+    height: 100%;
+}
+
+#keyboard {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    /* min-height: 200px; */
+    min-width: 600px;
+    padding: 18px 20px;
+    background-color: var(--keyboard-backg);
+    margin: 30% 60px;border-radius: 6px;
+    border: 1px solid var(--key-border-dark);
+    box-shadow: 0.5px 1px 1px 1px rgba(1, 1, 1, 0.6);
+}
+
+.key-row {
+    display: flex;
+    flex-basis: 100%;
+}
+
+.key {
+    display: flex;
+    flex-grow: 1;
+    width: auto;
+    /* height: 10%; */
+    margin: 0.2px;
+    padding: 5px;
+    padding-top: 3px;
+    padding-bottom: 8px;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 3px;
+    /* inner and outer shadow for keys */
+    box-shadow: 1px 1px 1px rgba(1, 1, 1, 0.6),
+        inset 0px -2px 1px 4px var(--key-shadow);
+    background-color: var(--key-backg);
+    border: 1px solid var(--key-border-dark);
+    cursor: pointer;
+    user-select: none;
+}
+
+.key:hover {
+    cursor: pointer;
+}
+
+.clicked {
+    background-color: rgba(209, 209, 209, 0.5);
+}
+
+.space {
+    flex-grow: 6;
+}

@@ -39,7 +39,8 @@ const classNames = {
     'Win-R': 'win-right'
 };
 
-const spaceString = '&nbsp;'
+const spaceString = '\u00A0'
+const newlineString = '\u000A'
 
 function onKeyPress(className) {
     let keyClassSelector = '.' + className;
@@ -74,7 +75,6 @@ keys.forEach((keyElement) => {
     });
 });
 
-
 // ---
 const contentTxtElement = document.querySelector('.content'); 
 const content = contentTxtElement.innerText;
@@ -87,10 +87,15 @@ function updateContent() {
 
 }
 
-const contentVal = 'javscript and web random words.\nThis is second line.\nHere we are at third line!';
+const contentVal = `Javscript and web random words.
+This is second line*
+Here we are at third line!
+I am at line four?
+Here is the sample text.`;
+
 function generateNodesForContent(contentValue) {
     // lines
-    const linesArray = contentVal.split('\n');
+    const linesArray = contentValue.split('\n');
     linesArray.forEach((line) => {
         const lineElement = document.createElement('div');
         lineElement.classList.add('line');
@@ -98,22 +103,28 @@ function generateNodesForContent(contentValue) {
         // words
         const wordsArray = line.split(' ');
         wordsArray.forEach((word) => {
-            const wordElement = document.createElement('span')
-            wordElement.classList.add('word')
-            lineElement.appendChild(wordElement) // add words child element
+            const wordElement = document.createElement('span');
+            wordElement.classList.add('word');
+            lineElement.appendChild(wordElement); // add words child element
+            
             // letters
             const letterArray = word.split('');
-            letterArray.forEach((letter) => {
+            letterArray.forEach((letter, letterIndex) => {
                 // letter
-                const letterElement = document.createElement('span')
-                letterElement.classList.add('letter')
-                letterElement.innerText = letter
-                wordElement.appendChild(letterElement)
-            })
-            wordElement.lastElementChild.append(spaceString)
-            console.log(wordElement.lastChild.innerText)
-        })
-        contentTxtElement.appendChild(lineElement)
-    })
+                const letterElement = document.createElement('span');
+                letterElement.classList.add('letter');
+                if (letterIndex === letterArray.length - 1) {
+                    letter += spaceString
+                }
+                letterElement.innerText = letter;
+                wordElement.appendChild(letterElement);
+            });
+        });
+        const newLineElement = lineElement.lastElementChild.lastElementChild;
+        newlineString.innerText = newLineElement.innerText + newlineString
+        contentTxtElement.appendChild(lineElement);
+    });
+    console.log(contentTxtElement);
 }
-generateNodesForContent(contentVal)
+
+generateNodesForContent(contentVal);

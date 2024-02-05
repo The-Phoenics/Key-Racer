@@ -9,7 +9,7 @@
     --key-border-dark: rgb(10, 10, 10);
     --key-shadow: rgb(204, 204, 204);
     
-    --text-color: #555;
+    --text-color: #777;
 }
 
 * {
@@ -24,6 +24,11 @@ body {
     position: relative;
     /* background-image: linear-gradient(to right, #434343 0%, black 100%); */
 }
+
+span {
+    float: left;
+}
+
 
 #header {
     height: 20vh;
@@ -48,6 +53,12 @@ body {
 #view {
     margin: 20px 3%;
     padding: 30px 30px;
+}
+
+.content {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 
 /* keyboard styling */

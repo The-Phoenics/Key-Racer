@@ -39,6 +39,8 @@ const classNames = {
     'Win-R': 'win-right'
 };
 
+const spaceString = '&nbsp;'
+
 function onKeyPress(className) {
     let keyClassSelector = '.' + className;
     const element = document.querySelector(keyClassSelector);
@@ -73,3 +75,45 @@ keys.forEach((keyElement) => {
 });
 
 
+// ---
+const contentTxtElement = document.querySelector('.content'); 
+const content = contentTxtElement.innerText;
+
+function matchContent() {
+
+}
+
+function updateContent() {
+
+}
+
+const contentVal = 'javscript and web random words.\nThis is second line.\nHere we are at third line!';
+function generateNodesForContent(contentValue) {
+    // lines
+    const linesArray = contentVal.split('\n');
+    linesArray.forEach((line) => {
+        const lineElement = document.createElement('div');
+        lineElement.classList.add('line');
+
+        // words
+        const wordsArray = line.split(' ');
+        wordsArray.forEach((word) => {
+            const wordElement = document.createElement('span')
+            wordElement.classList.add('word')
+            lineElement.appendChild(wordElement) // add words child element
+            // letters
+            const letterArray = word.split('');
+            letterArray.forEach((letter) => {
+                // letter
+                const letterElement = document.createElement('span')
+                letterElement.classList.add('letter')
+                letterElement.innerText = letter
+                wordElement.appendChild(letterElement)
+            })
+            wordElement.lastElementChild.append(spaceString)
+            console.log(wordElement.lastChild.innerText)
+        })
+        contentTxtElement.appendChild(lineElement)
+    })
+}
+generateNodesForContent(contentVal)

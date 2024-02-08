@@ -79,14 +79,6 @@ keys.forEach((keyElement) => {
 const contentTxtElement = document.querySelector('.content'); 
 const content = contentTxtElement.innerText;
 
-function matchContent() {
-
-}
-
-function updateContent() {
-
-}
-
 const contentVal = `Javscript and web random words.
 This is second line*
 Here we are at third line!
@@ -126,5 +118,4 @@ function generateNodesForContent(contentValue) {
     });
     console.log(contentTxtElement);
 }
-
 generateNodesForContent(contentVal);

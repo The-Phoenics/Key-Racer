@@ -1,0 +1,32 @@
+
+:root {
+    --text-color: #777;
+}
+
+/* parent division for text portion */
+#view {
+    margin: 20px 3%;
+    padding: 30px 30px;
+}
+
+.content {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.line {
+    display: flex;
+}
+
+/* remove whitespace between span elements */
+span {
+    float: left;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

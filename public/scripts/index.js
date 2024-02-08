@@ -31,7 +31,7 @@ const classNames = {
     'Win': 'win-right',
     'Alt': 'alt-left',
     ' ': 'space',
-    
+
     // right side keys
     'Alt-R': 'alt-right',
     'Control-R': 'ctrl-right',
@@ -70,20 +70,25 @@ window.addEventListener('keydown', (event) => {
 
 // event listeners for mouse clicks on all keys
 keys.forEach((keyElement) => {
-    keyElement.addEventListener('click', function() { 
+    keyElement.addEventListener('click', function () {
         keyClickEffect(this)
     });
 });
 
+
 // ---
-const contentTxtElement = document.querySelector('.content'); 
+const contentTxtElement = document.querySelector('.content');
 const content = contentTxtElement.innerText;
 
-const contentVal = `Javscript and web random words.
-This is second line*
-Here we are at third line!
-I am at line four?
-Here is the sample text.`;
+const contentVal = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed ornare ipsum, a eleifend nisi.
+Donec ultrices mi elit, fermentum ultrices mi dignissim eget. Phasellus dapibus felis non nisl luctus laoreet.
+Nunc urna massa, ultricies nec aliquam at, eleifend ornare ante. In vitae leo ultricies, blandit mauris vitae, consectetur nulla.
+Pellentesque convallis iaculis tristique. Sed in dapibus purus, sed cursus enim. Sed vitae tellus lorem. Duis a venenatis erat.
+Phasellus sed varius lectus. Cras vulputate eros tellus, eu molestie justo egestas id. Nam ut lacus vel felis scelerisque accumsan in ornare quam.
+Suspendisse id venenatis augue. In rhoncus nibh libero, at egestas diam blandit vitae.`;
+
+const maxWordsInOneLine = 17;
+const maxLinesInOnePara = 6;
 
 function generateNodesForContent(contentValue) {
     // lines
@@ -94,13 +99,14 @@ function generateNodesForContent(contentValue) {
 
         // words
         const wordsArray = line.split(' ');
-        wordsArray.forEach((word) => {
+        let loopIterationsForWords = wordsArray.length < maxWordsInOneLine ? wordsArray.length : maxWordsInOneLine;
+        for (let i = 0; i < loopIterationsForWords; i++) {
             const wordElement = document.createElement('span');
             wordElement.classList.add('word');
             lineElement.appendChild(wordElement); // add words child element
-            
+
             // letters
-            const letterArray = word.split('');
+            const letterArray = wordsArray[i].split('');
             letterArray.forEach((letter, letterIndex) => {
                 // letter
                 const letterElement = document.createElement('span');
@@ -111,7 +117,9 @@ function generateNodesForContent(contentValue) {
                 letterElement.innerText = letter;
                 wordElement.appendChild(letterElement);
             });
-        });
+        }
+
+        // wordsArray.every((word, wordIndex) => { });
         const newLineElement = lineElement.lastElementChild.lastElementChild;
         newlineString.innerText = newLineElement.innerText + newlineString
         contentTxtElement.appendChild(lineElement);

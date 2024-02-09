@@ -1,18 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@700&display=swap');
 
 :root {
-    --text-color: #777;
+    --bg-color: #323437;
+    --main-color: #e2b714;
+    --caret-color: #e2b714;
+    --sub-color: #646669;
+    --sub-alt-color: #2c2e31;
+    --text-color: #d1d0c5;
+    --error-color: #ca4754;
+    --error-extra-color: #7e2a33;
+    --colorful-error-color: #ca4754;
+    --colorful-error-extra-color: #7e2a33;
+}
+
+.caret {
+    border-bottom: 3px solid var(--caret-color);
 }
 
 /* parent division for text portion */
 #view {
     margin: 20px 3%;
     padding: 30px 30px;
+    font-family: 'Titillium Web', sans-serif;
 }
 
 .content {
-    color: var(--text-color);
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.letter {
+    color: var(--sub-alt-color);
 }
 
 .line {
@@ -29,4 +47,40 @@ span {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.pending {
+    color: var(--text-color);
+    opacity: 60%;
+}
+
+/* correct letter styling */
+.correct {
+    opacity: 100%;
+}
+
+/* incorrect letter styling */
+.incorrect {
+    color: var(--colorful-error-color)
+}
+
+
+
+
+
+/* dark theme styling */
+html {
+    background-color: var(--bg-color);
+}
+
+#parent-container {
+    background-color: var(--bg-color);
+}
+
+#header {
+    background-color: var(--bg-color);
+}
+
+span {
+    color: var(--text-color);
 }

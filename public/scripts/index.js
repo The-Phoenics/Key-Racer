@@ -1,3 +1,6 @@
+import { generateNodesForContent } from "./nodeGenerator.mjs";
+import { validate } from "./validate.mjs";
+
 const keys = document.querySelectorAll(".key");
 
 const classNames = {
@@ -28,7 +31,7 @@ const classNames = {
     '.': 'right-angle-bracket',
     '/': 'question-mark',
     'Control': 'ctrl-left',
-    'Win': 'win-right',
+    'Meta': 'win-right',
     'Alt': 'alt-left',
     ' ': 'space',
 
@@ -36,11 +39,8 @@ const classNames = {
     'Alt-R': 'alt-right',
     'Control-R': 'ctrl-right',
     'Shift-R': 'shift-right',
-    'Win-R': 'win-right'
+    'Meta-R': 'win-right'
 };
-
-const spaceString = '\u00A0'
-const newlineString = '\u000A'
 
 function onKeyPress(className) {
     let keyClassSelector = '.' + className;
@@ -56,6 +56,7 @@ function keyClickEffect(element) {
 // event listeners for keyboard clicks for all keys
 window.addEventListener('keydown', (event) => {
     let keyStr = event.key
+    console.log(keyStr)
     if (keyStr >= 'a' && keyStr <= 'z') {
         onKeyPress(keyStr)
     } else {
@@ -78,52 +79,16 @@ keys.forEach((keyElement) => {
 
 // ---
 const contentTxtElement = document.querySelector('.content');
-const content = contentTxtElement.innerText;
 
 const contentVal = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed ornare ipsum, a eleifend nisi.
 Donec ultrices mi elit, fermentum ultrices mi dignissim eget. Phasellus dapibus felis non nisl luctus laoreet.
 Nunc urna massa, ultricies nec aliquam at, eleifend ornare ante. In vitae leo ultricies, blandit mauris vitae, consectetur nulla.
 Pellentesque convallis iaculis tristique. Sed in dapibus purus, sed cursus enim. Sed vitae tellus lorem. Duis a venenatis erat.
-Phasellus sed varius lectus. Cras vulputate eros tellus, eu molestie justo egestas id. Nam ut lacus vel felis scelerisque accumsan in ornare quam.
-Suspendisse id venenatis augue. In rhoncus nibh libero, at egestas diam blandit vitae.`;
+Phasellus sed varius lectus. Cras vulputate eros tellus, eu molestie justo egestas id. Nam ut lacus vel felis scelerisque accumsan in ornare quam.`;
 
-const maxWordsInOneLine = 17;
-const maxLinesInOnePara = 6;
+generateNodesForContent(contentTxtElement, contentVal)
 
-function generateNodesForContent(contentValue) {
-    // lines
-    const linesArray = contentValue.split('\n');
-    linesArray.forEach((line) => {
-        const lineElement = document.createElement('div');
-        lineElement.classList.add('line');
 
-        // words
-        const wordsArray = line.split(' ');
-        let loopIterationsForWords = wordsArray.length < maxWordsInOneLine ? wordsArray.length : maxWordsInOneLine;
-        for (let i = 0; i < loopIterationsForWords; i++) {
-            const wordElement = document.createElement('span');
-            wordElement.classList.add('word');
-            lineElement.appendChild(wordElement); // add words child element
 
-            // letters
-            const letterArray = wordsArray[i].split('');
-            letterArray.forEach((letter, letterIndex) => {
-                // letter
-                const letterElement = document.createElement('span');
-                letterElement.classList.add('letter');
-                if (letterIndex === letterArray.length - 1) {
-                    letter += spaceString
-                }
-                letterElement.innerText = letter;
-                wordElement.appendChild(letterElement);
-            });
-        }
 
-        // wordsArray.every((word, wordIndex) => { });
-        const newLineElement = lineElement.lastElementChild.lastElementChild;
-        newlineString.innerText = newLineElement.innerText + newlineString
-        contentTxtElement.appendChild(lineElement);
-    });
-    console.log(contentTxtElement);
-}
-generateNodesForContent(contentVal);
+validate()

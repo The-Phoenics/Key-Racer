@@ -1,28 +1,12 @@
 
-/* 1373 width */
-@media (max-width: 1373px) {
+@media (max-width: 1136px) {
     .content {
         font-size: 1.2rem;
     }
 }
 
-/* 1136 width */
-@media (max-width: 1136px) {
-    .content {
-        font-size: 1rem;
-    }
-}
-
-/* 978 width */
-@media (max-width: 978px) {
-    .content {
-        font-size: 0.7rem;
-    }
-}
-
-/* 744 width */
 @media (max-width: 744px) {
     .content {
-        font-size: 0.5rem;
+        font-size: 1rem;
     }
 }

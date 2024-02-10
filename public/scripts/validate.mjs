@@ -34,17 +34,28 @@ function updateInfo() {
         info.currentLineNodeLength = info.currentLineElement.childNodes.length
         info.currentWordNodeLength = info.currentWordElement.childNodes.length
         
-        console.log(`line length: ${info.currentLineNodeLength}
+        /*
+console.log(`line length: ${info.currentLineNodeLength}
 word length: ${info.currentWordNodeLength}
 current letter: ${info.currentLetter}
 current word: ${info.currentWord}`)
+*/
     }
 }
 
 export function validate() {
-    setInterval(() => {
+    const interval = setInterval(() => {
+        if (info.currentLine == MAX_LINES) {
+            resetInfo()
+            clearInterval(interval)
+            console.log('done!')
+        }
         updateInfo()
-        onCorrect(info.currentLetterElement)
+        if (info.currentLine != 5 && isEven(getRandom()))
+            onCorrect(info.currentLetterElement)
+        else
+            onIncorrect(info.currentLetterElement)
+        
         info.currentLetter++
         if (info.currentWordNodeLength == info.currentLetter) {
             info.currentLetter = 0
@@ -56,12 +67,7 @@ export function validate() {
         }
         if (info.currentWordNodeLength == info.currentLineNodeLength)
             info.currentWord = 0
-        if (info.currentLine == MAX_LINES) {
-            resetInfo()
-        }
-        
-        // console.log(info)
-    }, 100);
+    }, 150);
 }
 
 function onCorrect(letterElement) {
@@ -76,5 +82,12 @@ function onIncorrect(letterElement) {
         letterElement.classList.add('incorrect')
     else
         console.log('Invalid letter element!')
+}
 
+function getRandom() {
+    return Math.floor(Math.random() * 10);
+}
+
+function isEven(num) {
+    return num % 2 == 0;
 }

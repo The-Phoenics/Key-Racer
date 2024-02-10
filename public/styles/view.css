@@ -19,8 +19,8 @@
 
 /* parent division for text portion */
 #view {
-    margin: 20px 3%;
-    padding: 30px 30px;
+    margin: 20px auto;
+    padding: 30px 20px;
     font-family: 'Titillium Web', sans-serif;
 }
 
@@ -35,6 +35,9 @@
 
 .line {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 /* remove whitespace between span elements */
@@ -61,11 +64,9 @@ span {
 
 /* incorrect letter styling */
 .incorrect {
-    color: var(--colorful-error-color)
+    /* color: var(--error-color) */
+    color: rgb(255, 30, 30);
 }
-
-
-
 
 
 /* dark theme styling */

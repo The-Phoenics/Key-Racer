@@ -1,5 +1,5 @@
 import { generateNodesForContent } from "./nodeGenerator.mjs";
-import { validate } from "./validate.mjs";
+import { updateViewContent } from "./validate.mjs";
 
 const keys = document.querySelectorAll(".key");
 
@@ -76,24 +76,22 @@ keys.forEach((keyElement) => {
     });
 });
 
-
 // ---
 const contentTxtElement = document.querySelector('.content');
 
-let contentVal = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed ornare ipsum, a eleifend nisi.
+let contentValue = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed ornare ipsum, a eleifend nisi.
 Donec ultrices mi elit, fermentum ultrices mi dignissim eget. Phasellus dapibus felis non nisl luctus laoreet.
 Nunc urna massa, ultricies nec aliquam at, eleifend ornare ante. In vitae leo ultricies, blandit mauris vitae, consectetur nulla.
 Pellentesque convallis iaculis tristique. Sed in dapibus purus, sed cursus enim. Sed vitae tellus lorem. Duis a venenatis erat.
 Phasellus sed varius lectus. Cras vulputate eros tellus, eu molestie justo egestas id. Nam ut lacus vel felis scelerisque accumsan in ornare quam.`;
 
-// contentVal = `AutoHotkey is a free and open-source custom scripting language for Microsoft Windows,
-// initially aimed at providing easy keyboard shortcuts or hotkeys, fast macro-creation and software automation 
-// that allows users of most levels of computer skill to automate repetitive tasks in any Windows application.
-// User interfaces can easily be extended or modified by AutoHotkey (for example, overriding the default 
-// Windows control key commands with their Emacs equivalents). 
-// The AutoHotkey installation includes its own extensive help file, and web-based documentation is also available.`
+contentValue = `AutoHotkey is a free and open-source custom scripting language for Microsoft Windows,
+initially aimed at providing easy keyboard shortcuts or hotkeys, fast macro-creation and software automation 
+that allows users of most levels of computer skill to automate repetitive tasks in any Windows application.
+User interfaces can easily be extended or modified by AutoHotkey (for example, overriding the default 
+Windows control key commands with their Emacs equivalents). 
+The AutoHotkey installation includes its own extensive help file, and web-based documentation is also available.`
 
-generateNodesForContent(contentTxtElement, contentVal)
+generateNodesForContent(contentTxtElement, contentValue)
 
-// ---
-validate()
+updateViewContent()

@@ -1,3 +1,4 @@
+import { MAX_LINES_IN_ONE_PARA } from "./nodeGenerator.mjs"
 
 const info = {
     currentLine: 0,
@@ -14,8 +15,6 @@ const info = {
     currentLetterElement: null,
 }
 
-const MAX_LINES = 6
-
 function resetInfo() {
     info.currentLine = 0
     info.currentWord = 0
@@ -24,55 +23,55 @@ function resetInfo() {
 
 function updateInfo() {
     info.linesNodeList = document.querySelectorAll('.line');
+    
+    if (info.currentWordNodeLength == info.currentLetter) {
+        info.currentLetter = 0
+        info.currentWord++
+    }
+    if (info.currentLineNodeLength == info.currentWord) {
+        info.currentWord = 0
+        info.currentLine++
+    }
+    if (info.currentWordNodeLength == info.currentLineNodeLength)
+        info.currentWord = 0
+    
     if (info.linesNodeList.length == 0) {
         console.log(`There are no lines in content!`)
     } else {
         info.currentLineElement = info.linesNodeList[info.currentLine]
         info.currentWordElement = info.currentLineElement.childNodes[info.currentWord];
         info.currentLetterElement = info.currentWordElement.childNodes[info.currentLetter]
-        // ---
+
         info.currentLineNodeLength = info.currentLineElement.childNodes.length
         info.currentWordNodeLength = info.currentWordElement.childNodes.length
-        
-        /*
-console.log(`line length: ${info.currentLineNodeLength}
-word length: ${info.currentWordNodeLength}
-current letter: ${info.currentLetter}
-current word: ${info.currentWord}`)
-*/
     }
 }
 
-export function validate() {
+function validate() {
+    let correct = true
+    if (correct)
+        onCorrect(info.currentLetterElement)
+    else
+        onIncorrect(info.currentLetterElement)
+}
+
+export function updateViewContent() {
     const interval = setInterval(() => {
-        if (info.currentLine == MAX_LINES) {
+        if (info.currentLine == MAX_LINES_IN_ONE_PARA) {
+            // paragraph finished
             resetInfo()
             clearInterval(interval)
-            console.log('done!')
         }
         updateInfo()
-        if (info.currentLine != 5 && isEven(getRandom()))
-            onCorrect(info.currentLetterElement)
-        else
-            onIncorrect(info.currentLetterElement)
-        
-        info.currentLetter++
-        if (info.currentWordNodeLength == info.currentLetter) {
-            info.currentLetter = 0
-            info.currentWord++
-        }
-        if (info.currentLineNodeLength == info.currentWord) {
-            info.currentWord = 0
-            info.currentLine++
-        }
-        if (info.currentWordNodeLength == info.currentLineNodeLength)
-            info.currentWord = 0
-    }, 150);
+        validate()
+    }, 50);
 }
 
 function onCorrect(letterElement) {
-    if (letterElement)
+    if (letterElement) {
         letterElement.classList.add('correct')
+        info.currentLetter++
+    }
     else
         console.log('Invalid letter element!')
 }
@@ -82,12 +81,4 @@ function onIncorrect(letterElement) {
         letterElement.classList.add('incorrect')
     else
         console.log('Invalid letter element!')
-}
-
-function getRandom() {
-    return Math.floor(Math.random() * 10);
-}
-
-function isEven(num) {
-    return num % 2 == 0;
 }

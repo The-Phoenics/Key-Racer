@@ -98,3 +98,17 @@ body {
 .space {
     flex-grow: 6;
 }
+
+
+/* responsive */
+@media (max-width: 1136px) {
+    .content {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 744px) {
+    .content {
+        font-size: 1rem;
+    }
+}

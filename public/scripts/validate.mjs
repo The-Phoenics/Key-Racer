@@ -21,9 +21,10 @@ function resetInfo() {
     info.currentLetter = 0
 }
 
+// TODO: Refactor
 function updateInfo() {
     info.linesNodeList = document.querySelectorAll('.line');
-    
+
     if (info.currentWordNodeLength == info.currentLetter) {
         info.currentLetter = 0
         info.currentWord++
@@ -34,7 +35,7 @@ function updateInfo() {
     }
     if (info.currentWordNodeLength == info.currentLineNodeLength)
         info.currentWord = 0
-    
+
     if (info.linesNodeList.length == 0) {
         console.log(`There are no lines in content!`)
     } else {
@@ -47,24 +48,21 @@ function updateInfo() {
     }
 }
 
-function validate() {
-    let correct = true
-    if (correct)
+function validate(pressedKeyChar) {
+    let currentLetter = info.currentLetterElement.innerText.trim()
+    if (pressedKeyChar == currentLetter.toLowerCase())
         onCorrect(info.currentLetterElement)
     else
         onIncorrect(info.currentLetterElement)
 }
 
-export function updateViewContent() {
-    const interval = setInterval(() => {
-        if (info.currentLine == MAX_LINES_IN_ONE_PARA) {
-            // paragraph finished
-            resetInfo()
-            clearInterval(interval)
-        }
-        updateInfo()
-        validate()
-    }, 50);
+export function updateViewContent(keyPressedCharacter) {
+    if (info.currentLine == MAX_LINES_IN_ONE_PARA) {
+        // paragraph finished
+        resetInfo()
+    }
+    updateInfo()
+    validate(keyPressedCharacter)
 }
 
 function onCorrect(letterElement) {
@@ -77,8 +75,10 @@ function onCorrect(letterElement) {
 }
 
 function onIncorrect(letterElement) {
-    if (letterElement)
+    if (letterElement) {
         letterElement.classList.add('incorrect')
+        info.currentLetter++
+    }
     else
         console.log('Invalid letter element!')
 }

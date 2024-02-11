@@ -42,29 +42,42 @@ const classNames = {
     'Meta-R': 'win-right'
 };
 
-function onKeyPress(className) {
+function onKeyPress(className, pressedKeyCharacter) {
     let keyClassSelector = '.' + className;
     const element = document.querySelector(keyClassSelector);
     keyClickEffect(element);
+    updateViewContent(pressedKeyCharacter)
 }
 
 function keyClickEffect(element) {
     element.classList.add("clicked");
-    setTimeout(() => element.classList.remove("clicked"), 100);
+    setTimeout(() => element.classList.remove("clicked"), 50);
 }
 
 // event listeners for keyboard clicks for all keys
-window.addEventListener('keydown', (event) => {
+window.addEventListener('keyup', (event) => {
     let keyStr = event.key
-    console.log(keyStr)
     if (keyStr >= 'a' && keyStr <= 'z') {
-        onKeyPress(keyStr)
+        onKeyPress(keyStr, keyStr)
     } else {
         if (event.location == 2) // for right side keys
             keyStr = keyStr + '-R'
         if (classNames[keyStr] != undefined) {
-            console.log(keyStr)
-            onKeyPress(classNames[keyStr])
+            onKeyPress(classNames[keyStr], keyStr)
+        }
+    }
+});
+
+// keep keyboard key hightlighted on held down
+window.addEventListener('keydown', (event) => {
+    let keyStr = event.key
+    if (keyStr >= 'a' && keyStr <= 'z') {
+        document.querySelector('.' + keyStr).classList.add("clicked");
+    } else {
+        if (event.location == 2) // for right side keys
+            keyStr = keyStr + '-R'
+        if (classNames[keyStr] != undefined) {
+            document.querySelector('.' + classNames[keyStr]).classList.add("clicked");
         }
     }
 });
@@ -93,5 +106,3 @@ Windows control key commands with their Emacs equivalents).
 The AutoHotkey installation includes its own extensive help file, and web-based documentation is also available.`
 
 generateNodesForContent(contentTxtElement, contentValue)
-
-updateViewContent()

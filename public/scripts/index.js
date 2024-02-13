@@ -1,7 +1,7 @@
 import { generateNodesForContent } from "./nodeGenerator.mjs";
 import { updateViewContent } from "./validate.mjs";
 
-const keys = document.querySelectorAll(".key");
+let SHIFT_HELD_DOWN = false;
 
 const classNames = {
     '`': 'tilde',
@@ -42,11 +42,10 @@ const classNames = {
     'Meta-R': 'win-right'
 };
 
-function onKeyPress(className, pressedKeyCharacter) {
+function onKeyPress(className) {
     let keyClassSelector = '.' + className;
     const element = document.querySelector(keyClassSelector);
     keyClickEffect(element);
-    updateViewContent(pressedKeyCharacter)
 }
 
 function keyClickEffect(element) {
@@ -54,19 +53,89 @@ function keyClickEffect(element) {
     setTimeout(() => element.classList.remove("clicked"), 50);
 }
 
-// event listeners for keyboard clicks for all keys
 window.addEventListener('keyup', (event) => {
-    let keyStr = event.key
-    if (keyStr >= 'a' && keyStr <= 'z') {
-        onKeyPress(keyStr, keyStr)
+    const pressedKey = event.key
+    const pressedKeyLocation = event.location
+
+    // udpate data for shift key
+    updateSpecialKeysStatesOnKeyUp(event);
+
+    // highlighting the keyboard keys
+    updateKeyboardOnKeyPressOnKeyUp(event);
+});
+
+window.addEventListener('keydown', (event) => {
+    const pressedKey = event.key
+    const pressedKeyLocation = event.location
+
+    // udpate data for shift key
+    updateSpecialKeysStatesOnKeyDown(event);
+
+    // highlighting the keyboard keys
+    updateKeyboardOnKeyPressOnKeyDown(event);
+
+    // update the view's text with validation
+    const pressedKeyValue = evaluateKeyPressedValue(pressedKey)
+    console.log(pressedKeyValue)
+    if (pressedKeyValue)
+        updateViewContent(pressedKeyValue);
+});
+
+function evaluateKeyPressedValue(pressedKeyStr) {
+    if (pressedKeyStr.length === 1) {
+        // if value is an alphabet    
+        if (pressedKeyStr >= 'a' && pressedKeyStr <= 'z') {
+            // capitalize if shift is held down
+            if (SHIFT_HELD_DOWN) {
+                pressedKeyStr = pressedKeyStr.toUpperCase()
+            }
+            return pressedKeyStr;
+        } else {
+            // TODO: for the other keys like number and other character keys
+        }
     } else {
-        if (event.location == 2) // for right side keys
-            keyStr = keyStr + '-R'
-        if (classNames[keyStr] != undefined) {
-            onKeyPress(classNames[keyStr], keyStr)
+        return null;
+    }
+}
+
+function updateSpecialKeysStatesOnKeyUp(keyPressedStr) {
+    switch (keyPressedStr) {
+        case 'Shift':
+            SHIFT_HELD_DOWN = false
+            break;
+
+        default:
+            break;
+    }
+}
+
+function updateKeyboardOnKeyPressOnKeyUp(pressedKeyStr, keyUpEventLocation) {
+    if (pressedKeyStr >= 'a' && pressedKeyStr <= 'z') {
+        onKeyPress(pressedKeyStr)
+    } else {
+        if (keyUpEventLocation == 2)
+            pressedKeyStr = pressedKeyStr + '-R'
+        if (classNames[pressedKeyStr] != undefined) {
+            onKeyPress(classNames[pressedKeyStr])
         }
     }
-});
+}
+
+// Special keys like Shift, Capslock, Enter, Backspace
+function updateSpecialKeysStatesOnKeyDown(keyPressedStr) {
+    switch (keyPressedStr) {
+        case 'Shift':
+            SHIFT_HELD_DOWN = true
+            break;
+
+        default:
+            break;
+    }
+}
+
+function updateKeyboardOnKeyPressOnKeyDown(keyPressedStr) {
+
+}
 
 // keep keyboard key hightlighted on held down
 window.addEventListener('keydown', (event) => {
@@ -83,7 +152,7 @@ window.addEventListener('keydown', (event) => {
 });
 
 // event listeners for mouse clicks on all keys
-keys.forEach((keyElement) => {
+document.querySelectorAll(".key").forEach((keyElement) => {
     keyElement.addEventListener('click', function () {
         keyClickEffect(this)
     });
@@ -92,17 +161,10 @@ keys.forEach((keyElement) => {
 // ---
 const contentTxtElement = document.querySelector('.content');
 
-let contentValue = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed ornare ipsum, a eleifend nisi.
-Donec ultrices mi elit, fermentum ultrices mi dignissim eget. Phasellus dapibus felis non nisl luctus laoreet.
-Nunc urna massa, ultricies nec aliquam at, eleifend ornare ante. In vitae leo ultricies, blandit mauris vitae, consectetur nulla.
-Pellentesque convallis iaculis tristique. Sed in dapibus purus, sed cursus enim. Sed vitae tellus lorem. Duis a venenatis erat.
-Phasellus sed varius lectus. Cras vulputate eros tellus, eu molestie justo egestas id. Nam ut lacus vel felis scelerisque accumsan in ornare quam.`;
-
-contentValue = `AutoHotkey is a free and open-source custom scripting language for Microsoft Windows,
+let contentValue = `AutoHotkey is a free and open-source custom scripting language for Microsoft Windows,
 initially aimed at providing easy keyboard shortcuts or hotkeys, fast macro-creation and software automation 
 that allows users of most levels of computer skill to automate repetitive tasks in any Windows application.
 User interfaces can easily be extended or modified by AutoHotkey (for example, overriding the default 
-Windows control key commands with their Emacs equivalents). 
-The AutoHotkey installation includes its own extensive help file, and web-based documentation is also available.`
+Windows control key commands with their Emacs equivalents).`;
 
 generateNodesForContent(contentTxtElement, contentValue)

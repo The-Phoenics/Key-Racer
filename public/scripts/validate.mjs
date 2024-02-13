@@ -50,7 +50,7 @@ function updateInfo() {
 
 function validate(pressedKeyChar) {
     let currentLetter = info.currentLetterElement.innerText.trim()
-    if (pressedKeyChar == currentLetter.toLowerCase())
+    if (pressedKeyChar == currentLetter)
         onCorrect(info.currentLetterElement)
     else
         onIncorrect(info.currentLetterElement)

@@ -9,7 +9,7 @@
     --key-border-dark: rgb(10, 10, 10);
     --key-shadow: rgb(204, 204, 204);
     
-    --view-top-margin: 0vh;
+    --view-top-margin: 15vh;
 }
 
 * {

@@ -1,8 +1,6 @@
 import isAlphabet from "./utils.mjs";
 import { updateViewContent } from "./validate.mjs";
 
-let SHIFT_HELD_DOWN = false;
-
 const classNames = {
     '`': 'tilde',
     '1': 'one',
@@ -45,12 +43,8 @@ const classNames = {
 // Keyboard event listeners
 window.addEventListener('keyup', (event) => {
     const pressedKey = event.key
-console.log(`value of event.key keyup: ${pressedKey}`)
     const pressedKeyLocation = event.location
-    
-    // udpate data for shift key
-    updateSpecialKeysStatesOnKeyUp(pressedKey);
-    
+
     // highlighting the keyboard keys
     updateKeyboardOnKeyPressOnKeyUp(pressedKey, pressedKeyLocation);
 });
@@ -58,16 +52,12 @@ console.log(`value of event.key keyup: ${pressedKey}`)
 window.addEventListener('keydown', (event) => {
     const pressedKey = event.key
     const pressedKeyLocation = event.location
-    
-    // udpate data for shift key
-    updateSpecialKeysStatesOnKeyDown(pressedKey);
 
     // highlighting the keyboard keys
     updateKeyboardOnKeyPressOnKeyDown(pressedKey, pressedKeyLocation);
 
     // update the view's text with validation
     const pressedKeyValue = evaluateKeyPressedValue(pressedKey)
-// console.log(`Key value after validation: ${pressedKeyValue}`)
     if (pressedKeyValue)
         updateViewContent(pressedKeyValue);
 });
@@ -85,18 +75,8 @@ function keyClickEffect(element) {
 
 // evaluate the valid key press and string value of the pressed key
 function evaluateKeyPressedValue(pressedKeyStr) {
-// console.log(`Key pressed: ${pressedKeyStr}`)
     if (pressedKeyStr.length === 1) {
-        // if value is an alphabet    
-        if (isAlphabet(pressedKeyStr)) {
-            // capitalize if shift is held down
-            if (SHIFT_HELD_DOWN) {
-                //pressedKeyStr = pressedKeyStr.toUpperCase()
-            }
-            return pressedKeyStr;
-        } else {
-            // TODO: for the other keys like number and other character keys (; , ' - etc)
-        }
+        return pressedKeyStr;
     } else {
         return null;
     }
@@ -123,29 +103,6 @@ function updateKeyboardOnKeyPressOnKeyDown(pressedKeyStr, keyUpEventLocation) {
         if (classNames[pressedKeyStr] != undefined) {
             document.querySelector('.' + classNames[pressedKeyStr]).classList.add("clicked");
         }
-    }
-}
-
-// Special keys like Shift, Capslock, Enter, Backspace
-function updateSpecialKeysStatesOnKeyDown(keyPressedStr) {
-    switch (keyPressedStr) {
-        case 'Shift':
-            SHIFT_HELD_DOWN = true
-            break;
-
-        default:
-            break;
-    }
-}
-
-function updateSpecialKeysStatesOnKeyUp(keyPressedStr) {
-    switch (keyPressedStr) {
-        case 'Shift':
-            SHIFT_HELD_DOWN = false
-            break;
-
-        default:
-            break;
     }
 }
 

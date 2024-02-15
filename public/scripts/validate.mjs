@@ -6,13 +6,20 @@ const info = {
     currentLetter: 0,
 
     linesNodeList: null,
+    numOfLines: null,
 
-    currentLineNodeLength: null,
-    currentWordNodeLength: null,
+    wordsInCurrentLine: null,
+    lettersInCurrentWord: null,
 
     currentLineElement: null,
     currentWordElement: null,
     currentLetterElement: null,
+
+    hasFinished: function () {
+        return this.currentLetter + 1 == this.lettersInCurrentWord &&
+            this.currentWord + 1 == this.wordsInCurrentLine &&
+            this.currentLine + 1 == this.numOfLines
+    }
 }
 
 function resetInfo() {
@@ -21,21 +28,21 @@ function resetInfo() {
     info.currentLetter = 0
 }
 
-// TODO: Refactor
+//TODO: Refactor
 function updateInfo() {
     info.linesNodeList = document.querySelectorAll('.line');
+    info.numOfLines = info.linesNodeList.length
 
-    if (info.currentWordNodeLength == info.currentLetter) {
+    // go to next word
+    if (info.lettersInCurrentWord == info.currentLetter) {
         info.currentLetter = 0
         info.currentWord++
     }
-    if (info.currentLineNodeLength == info.currentWord) {
+    // go to next line
+    if (info.wordsInCurrentLine == info.currentWord) {
         info.currentWord = 0
         info.currentLine++
     }
-    if (info.currentWordNodeLength == info.currentLineNodeLength)
-        info.currentWord = 0
-
     if (info.linesNodeList.length == 0) {
         console.log(`There are no lines in content!`)
     } else {
@@ -43,8 +50,8 @@ function updateInfo() {
         info.currentWordElement = info.currentLineElement.childNodes[info.currentWord];
         info.currentLetterElement = info.currentWordElement.childNodes[info.currentLetter]
 
-        info.currentLineNodeLength = info.currentLineElement.childNodes.length
-        info.currentWordNodeLength = info.currentWordElement.childNodes.length
+        info.wordsInCurrentLine = info.currentLineElement.childNodes.length
+        info.lettersInCurrentWord = info.currentWordElement.childNodes.length
     }
 }
 
@@ -57,12 +64,13 @@ function validate(pressedKeyChar) {
 }
 
 export function updateViewContent(keyPressedCharacter) {
-    if (info.currentLine == MAX_LINES_IN_ONE_PARA) {
-        // paragraph finished
-        resetInfo()
+    if (!info.hasFinished()) {
+        updateInfo()
+        validate(keyPressedCharacter)
+    } else {
+        console.log('Finished!')
+        // TODO: Changing the content once user finishes
     }
-    updateInfo()
-    validate(keyPressedCharacter)
 }
 
 function onCorrect(letterElement) {

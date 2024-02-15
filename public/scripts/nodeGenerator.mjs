@@ -7,16 +7,19 @@ const newlineString = '\u000A'
 
 export function generateNodesForContent(contentTxtElement, contentValue) {
     // array of lines
-    const linesArray = contentValue.split('\n');
+    const linesArray = contentValue.split('\n');    
     let lineItrLimit = Math.min(linesArray.length, MAX_LINES_IN_ONE_PARA);
     for (let i = 0; i < lineItrLimit; i++) {
         const lineElement = getLineElement()
         // text content of the line
-        const line = linesArray.at(i)
+        let line = linesArray.at(i)
+        line = line.trim()
 
         // array of words in that line
-        const wordsArray = line.split(' ');
-        let wordItrLimit = Math.min(wordsArray.length, MAX_WORDS_IN_ONE_LINE);
+        const wordsInCurrentLine = line.split(' ').length
+        let wordItrLimit = Math.min(wordsInCurrentLine, MAX_WORDS_IN_ONE_LINE);
+
+        const wordsArray = line.split(' ', wordItrLimit);
         for (let j = 0; j < wordItrLimit; ++j) {
             const wordElement = getWordElement()
             lineElement.appendChild(wordElement);
@@ -24,9 +27,6 @@ export function generateNodesForContent(contentTxtElement, contentValue) {
             const letterArray = wordsArray[j].split('');
             createLetterNodesFromWord(letterArray, wordElement)
         }
-
-        const newLineElement = lineElement.lastElementChild.lastElementChild;
-        // newLineElement.innerText = newLineElement.innerText + newlineString
         contentTxtElement.appendChild(lineElement);
     }
 }

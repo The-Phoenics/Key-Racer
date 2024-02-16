@@ -52,6 +52,7 @@ span {
     align-items: center;
 }
 
+/* letter styling when its not reached yed */
 .pending {
     color: var(--text-color);
     opacity: 60%;

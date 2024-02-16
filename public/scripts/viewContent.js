@@ -15,6 +15,10 @@ function changeViewText(textData) {
 
 async function fetchData() {
     // TODO: random text for view content
+    fetch('https://jsonplaceholder.typicode.com/comments?postId=1')
+        .then(response => response.json())
+        .then(json => console.log(json))
 }
+fetchData()
 
 changeViewText(contentValue)

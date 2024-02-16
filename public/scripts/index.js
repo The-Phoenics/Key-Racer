@@ -1,4 +1,4 @@
-import isAlphabet from "./utils.mjs";
+import { makeLetterPending, isAlphabet } from "./utils.mjs";
 import { INFO, updateViewContentG } from "./validate.mjs";
 
 const classNames = {
@@ -52,6 +52,10 @@ window.addEventListener('keyup', (event) => {
 window.addEventListener('keydown', (event) => {
     const pressedKey = event.key
     const pressedKeyLocation = event.location
+    
+    if (pressedKey == 'Backspace') {
+        updateOnBackSpace()
+    }
 
     // highlighting the keyboard keys
     updateKeyboardOnKeyPressOnKeyDown(pressedKey, pressedKeyLocation);
@@ -109,7 +113,19 @@ function updateKeyboardOnKeyPressOnKeyDown(pressedKeyStr, keyUpEventLocation) {
 // Backspace
 function updateOnBackSpace() {
     if (!INFO.isAtFirstLetterFirstLine()) {
-        
+        if (INFO.isAtFirstLetterOfCurrentLine()) {
+            
+        }
+        else if (INFO.isAtFirstLetterOfWord()) {
+            INFO.currentWord--
+            INFO.updateCurrentWordElement()
+            INFO.currentLetter = INFO.lettersInCurrentWord - 1
+            makeLetterPending(INFO.currentWordElement.childNodes[INFO.currentLetter])
+        }
+        else {
+            INFO.currentLetter--
+            makeLetterPending(INFO.currentWordElement.childNodes[INFO.currentLetter])
+        }
     }
 }
 

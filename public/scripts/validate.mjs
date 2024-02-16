@@ -1,3 +1,5 @@
+import { onCorrect, onIncorrect } from "./utils.mjs"
+
 export const INFO = {
     currentLine: 0,
     currentWord: 0,
@@ -24,14 +26,28 @@ export const INFO = {
             this.currentWord == 0 &&
             this.currentLine == 0
     },
-    
+
     isAtFirstLetterOfCurrentLine: function () {
         return this.currentLetter == 0 &&
             this.currentWord == 0
     },
-    
+
     isAtFirstLetterOfWord: function () {
         return this.currentLetter == 0
+    },
+
+    updateCurrentWordElement: function () {
+        this.wordsInCurrentLine = this.currentLineElement.childNodes.length
+        this.currentWordElement = this.currentLineElement.childNodes[INFO.currentWord];
+        this.lettersInCurrentWord = this.currentWordElement.childNodes.length
+    },
+
+    updateCurrentLineElement: function () {
+        
+    },
+
+    updateCurrentLetterElement: function () {
+        this.currentLineElement = this.linesNodeList[INFO.currentLine]
     }
 }
 
@@ -92,22 +108,4 @@ function validate(pressedKeyChar) {
         onCorrect(INFO.currentLetterElement)
     else
         onIncorrect(INFO.currentLetterElement)
-}
-
-function onCorrect(letterElement) {
-    if (letterElement) {
-        letterElement.classList.add('correct')
-        INFO.currentLetter++
-    }
-    else
-        console.log('Invalid letter element!')
-}
-
-function onIncorrect(letterElement) {
-    if (letterElement) {
-        letterElement.classList.add('incorrect')
-        INFO.currentLetter++
-    }
-    else
-        console.log('Invalid letter element!')
 }

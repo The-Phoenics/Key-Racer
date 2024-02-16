@@ -1,5 +1,5 @@
 import isAlphabet from "./utils.mjs";
-import { updateViewContent } from "./validate.mjs";
+import { INFO, updateViewContentG } from "./validate.mjs";
 
 const classNames = {
     '`': 'tilde',
@@ -59,7 +59,7 @@ window.addEventListener('keydown', (event) => {
     // update the view's text with validation
     const pressedKeyValue = evaluateKeyPressedValue(pressedKey)
     if (pressedKeyValue)
-        updateViewContent(pressedKeyValue);
+        updateViewContentG(pressedKeyValue);
 });
 
 function onKeyPress(className) {
@@ -103,6 +103,13 @@ function updateKeyboardOnKeyPressOnKeyDown(pressedKeyStr, keyUpEventLocation) {
         if (classNames[pressedKeyStr] != undefined) {
             document.querySelector('.' + classNames[pressedKeyStr]).classList.add("clicked");
         }
+    }
+}
+
+// Backspace
+function updateOnBackSpace() {
+    if (!INFO.isAtFirstLetterFirstLine()) {
+        
     }
 }
 

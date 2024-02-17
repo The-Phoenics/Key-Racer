@@ -114,7 +114,7 @@ function updateKeyboardOnKeyPressOnKeyDown(pressedKeyStr, keyUpEventLocation) {
 function updateOnBackSpace() {
     if (!INFO.isAtFirstLetterFirstLine()) {
         if (INFO.isAtFirstLetterOfCurrentLine()) {
-            
+            //...
         }
         else if (INFO.isAtFirstLetterOfWord()) {
             INFO.currentWord--

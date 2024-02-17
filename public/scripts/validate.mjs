@@ -1,4 +1,6 @@
-import { onCorrect, onIncorrect } from "./utils.mjs"
+import { MAX_LINES_IN_ONE_PARA, MAX_WORDS_IN_ONE_LINE } from "./nodeGenerator.mjs"
+import { onCorrect, onIncorrect, randomParagraph } from "./utils.mjs"
+import { changeViewText } from "./viewContent.mjs"
 
 export const INFO = {
     currentLine: 0,
@@ -42,10 +44,6 @@ export const INFO = {
         this.lettersInCurrentWord = this.currentWordElement.childNodes.length
     },
 
-    updateCurrentLineElement: function () {
-        
-    },
-
     updateCurrentLetterElement: function () {
         this.currentLineElement = this.linesNodeList[INFO.currentLine]
     }
@@ -56,6 +54,7 @@ export function initLinesDataG() {
     INFO.numOfLines = INFO.linesNodeList.length
 }
 
+// Update/Initialize the INFO object data
 export function initInfoDataG() {
     INFO.currentLineElement = INFO.linesNodeList[INFO.currentLine]
     INFO.currentWordElement = INFO.currentLineElement.childNodes[INFO.currentWord];
@@ -65,14 +64,21 @@ export function initInfoDataG() {
     INFO.lettersInCurrentWord = INFO.currentWordElement.childNodes.length
 }
 
+// Function for updateing the content text on the basis of validation
 export function updateViewContentG(keyPressedCharacter) {
     if (!INFO.hasFinished()) {
         updateInfo()
         validate(keyPressedCharacter)
     } else {
         console.log('Finished!')
-        // resetInfo()
         // TODO: Changing the content once user finishes
+        resetInfo()
+        let contentTextVal = randomParagraph(MAX_WORDS_IN_ONE_LINE, MAX_LINES_IN_ONE_PARA)
+        changeViewText(contentTextVal)
+        // update info object when view's text changes
+        initLinesDataG()
+        initInfoDataG()
+
     }
 }
 

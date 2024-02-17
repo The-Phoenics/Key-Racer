@@ -1,9 +1,7 @@
+export const MAX_WORDS_IN_ONE_LINE = 15;
+export const MAX_LINES_IN_ONE_PARA = 5;
 
-export const MAX_WORDS_IN_ONE_LINE = 17;
-export const MAX_LINES_IN_ONE_PARA = 6;
-
-const spaceString = '\u00A0'
-const newlineString = '\u000A'
+const SPACE_UNICODE_VALUE = '\u00A0'
 
 export function generateNodesForContent(contentTxtElement, contentValue) {
     // array of lines
@@ -36,7 +34,7 @@ function createLetterNodesFromWord(letterArray, wordNodeElement) {
         let letterElement = getLetterElement()
         if (letterIndex === letterArray.length - 1) {
             // add white space at end of last letter
-            letter += spaceString
+            letter += SPACE_UNICODE_VALUE
         }
         letterElement.innerText = letter;
         // add letter node element to parent word element

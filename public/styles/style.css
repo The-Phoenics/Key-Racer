@@ -109,6 +109,10 @@ body {
 }
 
 @media (max-width: 744px) {
+    #header {
+        height: 10vh;
+    }
+
     .content {
         font-size: 1rem;
     }

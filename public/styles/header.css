@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@700&display=swap');
+
+:root {
+    --main-color: #e2b714;
+    --caret-color: #e2b714;
+}
+
+/*
+* Header parent contains header
+*/
+#header-parent {
+}
+
+.header {
+    height: var(--view-top-margin);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7%;
+    font-size: 1.7rem;
+}
+
+.header-left {
+    color: var(--main-color);
+}
+
+.header-right {
+    display: flex;
+    color: var(--main-color);
+}
+
+.wpm-txt {
+    margin-left: 5px;
+}

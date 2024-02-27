@@ -3,6 +3,8 @@
 :root {
     --main-color: #e2b714;
     --caret-color: #e2b714;
+    
+    --wpm-font-size: 1.7rem; 
 }
 
 /*
@@ -17,16 +19,29 @@
     justify-content: space-between;
     align-items: center;
     padding: 7%;
-    font-size: 1.7rem;
+    font-size: var(--wpm-font-size);
 }
 
 .header-left {
     color: var(--main-color);
 }
 
+.time-txt {
+    font-weight: bold;
+    font-size: 2.2rem;
+}
+
 .header-right {
     display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--main-color);
+}
+
+.speed-info {
+    font-weight: bold;
+    font-size: 2.2rem;
+    margin-right: 2px;
 }
 
 .wpm-txt {

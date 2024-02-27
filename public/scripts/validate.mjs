@@ -17,6 +17,11 @@ export const INFO = {
     currentWordElement: null,
     currentLetterElement: null,
 
+    // words that has been typed so far
+    wordsTypedCount: 0,
+    // letter/characters that has been typed so far
+    lettersTypedCount: 0,
+
     hasFinished: function () {
         return this.currentLetter == this.lettersInCurrentWord &&
             this.currentWord + 1 == this.wordsInCurrentLine &&
@@ -46,7 +51,20 @@ export const INFO = {
 
     updateCurrentLetterElement: function () {
         this.currentLineElement = this.linesNodeList[INFO.currentLine]
-    }
+    },
+
+    updateCurrentLetter: function() {
+        INFO.currentLetter++
+        INFO.lettersTypedCount++
+    },
+
+getWordsTyped: function() {
+    return this.wordsTypedCount;
+},
+
+getLettersTyped: function() {
+    return this.lettersTypedCount;
+}
 }
 
 export function initLinesDataG() {
@@ -70,15 +88,13 @@ export function updateViewContentG(keyPressedCharacter) {
         updateInfo()
         validate(keyPressedCharacter)
     } else {
-        console.log('Finished!')
-        // TODO: Changing the content once user finishes
         resetInfo()
         let contentTextVal = randomParagraph(MAX_WORDS_IN_ONE_LINE, MAX_LINES_IN_ONE_PARA)
+        // Changing the content once user finishes
         changeViewText(contentTextVal)
         // update info object when view's text changes
         initLinesDataG()
         initInfoDataG()
-
     }
 }
 
@@ -89,21 +105,26 @@ function resetInfo() {
     initLinesDataG()
 }
 
-//TODO: Refactor
 function updateInfo() {
     // go to next word
     if (INFO.lettersInCurrentWord == INFO.currentLetter) {
         INFO.currentLetter = 0
         INFO.currentWord++
+        // update the words typed count
+        INFO.wordsTypedCount++
     }
     // go to next line
     if (INFO.wordsInCurrentLine == INFO.currentWord) {
         INFO.currentWord = 0
         INFO.currentLine++
+        INFO.wordsTypedCount++
+        // update the letters typed count
+        INFO.lettersTypedCount++
     }
     if (INFO.linesNodeList.length == 0) {
         console.log(`There are no lines in content!`)
     } else {
+        initLinesDataG()
         initInfoDataG()
     }
 }

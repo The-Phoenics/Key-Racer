@@ -121,10 +121,14 @@ function updateOnBackSpace() {
             INFO.updateCurrentWordElement()
             INFO.currentLetter = INFO.lettersInCurrentWord - 1
             makeLetterPending(INFO.currentWordElement.childNodes[INFO.currentLetter])
+            // reduce the words typed count
+            INFO.wordsTypedCount--
         }
         else {
             INFO.currentLetter--
             makeLetterPending(INFO.currentWordElement.childNodes[INFO.currentLetter])
+            // reduce the letters typed count
+            INFO.lettersTypedCount--
         }
     }
 }
@@ -135,3 +139,25 @@ document.querySelectorAll(".key").forEach((keyElement) => {
         keyClickEffect(this)
     });
 });
+
+// Update word per minute speed
+const wpmElement = document.querySelector('.speed-info')
+const timerElement = document.querySelector('.time-txt')
+
+function updateWPM() {
+    wpmElement.innerText = calculateWPM() 
+}
+setInterval(() => updateWPM(), 2000);
+
+function calculateWPM() {
+    const elapsedTimeInSeconds = parseInt(timerElement.innerText)
+    const wordsTyped = INFO.getWordsTyped();
+    const lettersTyped = INFO.getLettersTyped();
+    const wpmSpeed = Math.round((wordsTyped) / (elapsedTimeInSeconds / 60));
+    return wpmSpeed
+}
+
+// Update timer
+setInterval(() => {
+    timerElement.innerText = parseInt(timerElement.innerText) + 1
+}, 1000)

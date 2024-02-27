@@ -8,7 +8,7 @@ export function isAlphabet(character) {
 export function onCorrect(letterElement) {
     if (letterElement) {
         letterElement.classList.add('correct')
-        INFO.currentLetter++
+        INFO.updateCurrentLetter()
     }
     else
         console.log('Invalid letter element!')
@@ -17,7 +17,7 @@ export function onCorrect(letterElement) {
 export function onIncorrect(letterElement) {
     if (letterElement) {
         letterElement.classList.add('incorrect')
-        INFO.currentLetter++
+        INFO.updateCurrentLetter()
     }
     else
         console.log('Invalid letter element!')

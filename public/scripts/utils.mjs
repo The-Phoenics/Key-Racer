@@ -9,6 +9,12 @@ export function appendNextSiblingChild(nodeToAppend, existingNode) {
     }
 }
 
+export function removeAllChildNodes(contentNode) {
+    while (contentNode.firstChild) {
+        contentNode.removeChild(contentNode.lastChild);
+    }
+}
+
 export function isAlphabet(character) {
     return character >= 'a' && character <= 'z'
 }

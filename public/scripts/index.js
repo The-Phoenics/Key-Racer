@@ -1,6 +1,9 @@
 import { makeLetterPending, isAlphabet, KEY_CLASSNAMES_MAPPING } from "./utils.mjs";
 import { INFO, updateViewContentG } from "./validate.mjs";
 import { startTimer } from "./header.mjs";
+import { randomParagraph, removeAllChildNodes } from "./utils.mjs";
+import { MAX_LINES_IN_ONE_PARA, MAX_WORDS_IN_ONE_LINE, generateNodesForContent } from "./nodeGenerator.mjs";
+import { initInfoDataG, initLinesDataG } from "./validate.mjs";
 
 let has_started = false;
 function start_timer_on_key_press() {
@@ -8,6 +11,20 @@ function start_timer_on_key_press() {
         startTimer();
     }
     has_started = true
+}
+
+/*
+* Initalization
+*/
+window.onload = () => {
+    // random paragraph for content
+    let contentValue = randomParagraph(MAX_WORDS_IN_ONE_LINE, MAX_LINES_IN_ONE_PARA)
+    removeAllChildNodes(document.querySelector('.content'))
+    // generate nodes for all the text content
+    generateNodesForContent(document.querySelector('.content'), contentValue)
+    // initalize INFO object's data
+    initLinesDataG()
+    initInfoDataG()
 }
 
 /*

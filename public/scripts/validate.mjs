@@ -1,6 +1,5 @@
 import { MAX_LINES_IN_ONE_PARA, MAX_WORDS_IN_ONE_LINE } from "./nodeGenerator.mjs"
-import { onCorrect, onIncorrect, randomParagraph } from "./utils.mjs"
-import { changeViewText } from "./viewContent.mjs"
+import { onCorrect, onIncorrect, randomParagraph, removeAllChildNodes } from "./utils.mjs"
 
 export const INFO = {
     currentLine: 0,
@@ -53,18 +52,18 @@ export const INFO = {
         this.currentLineElement = this.linesNodeList[INFO.currentLine]
     },
 
-    updateCurrentLetter: function() {
+    updateCurrentLetter: function () {
         INFO.currentLetter++
         INFO.lettersTypedCount++
     },
 
-getWordsTyped: function() {
-    return this.wordsTypedCount;
-},
+    getWordsTyped: function () {
+        return this.wordsTypedCount;
+    },
 
-getLettersTyped: function() {
-    return this.lettersTypedCount;
-}
+    getLettersTyped: function () {
+        return this.lettersTypedCount;
+    }
 }
 
 export function initLinesDataG() {
@@ -91,7 +90,8 @@ export function updateViewContentG(keyPressedCharacter) {
         resetInfo()
         let contentTextVal = randomParagraph(MAX_WORDS_IN_ONE_LINE, MAX_LINES_IN_ONE_PARA)
         // Changing the content once user finishes
-        changeViewText(contentTextVal)
+        removeAllChildNodes(document.querySelector('.content'))
+        generateNodesForContent(document.querySelector('.content'), contentTextVal)
         // update info object when view's text changes
         initLinesDataG()
         initInfoDataG()

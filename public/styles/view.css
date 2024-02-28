@@ -65,7 +65,7 @@ span {
     /* aspect-ratio: 1 / 1; */
     width: 5px;
     height: 5px;
-    border-radius: 50%;    
+    border-radius: 50%;
     background-color: var(--text-color);
 }
 
@@ -103,6 +103,7 @@ html {
 span {
     color: var(--text-color);
 }
+
 /*
 * Responsive
 */
@@ -110,7 +111,7 @@ span {
     #root {
         width: 95%;
     }
-    
+
     .content {
         font-size: 1rem;
     }
@@ -120,4 +121,31 @@ span {
     #keyboard {
         scale: 0.7;
     }
+}
+
+/* mobile */
+@media screen and (max-width: 400px) {
+    #parent-container {
+        padding: 20px 10px;
+    }
+
+    #keyboard {
+        margin: 15px 0px;
+        scale: 1;
+    }
+
+    #view {
+        margin-top: 15px;
+        padding: 1em 8px;
+    }
+
+    .time-txt,
+    .speed-info {
+        font-size: 1.8rem;
+    }
+
+    .header {
+        margin-top: 20px;
+    }
+
 }

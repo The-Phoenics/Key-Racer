@@ -63,3 +63,42 @@ function shuffleArray(array) {
     }
     return array;
 }
+
+export const KEY_CLASSNAMES_MAPPING = {
+    '`': 'tilde',
+    '1': 'one',
+    '2': 'two',
+    '3': 'three',
+    '4': 'four',
+    '5': 'five',
+    '6': 'six',
+    '7': 'seven',
+    '8': 'eight',
+    '9': 'nine',
+    '0': 'zero',
+    '-': 'hyphen',
+    '=': 'plus',
+    'Backspace': 'backspace',
+    'Tab': 'tab',
+    '[': 'left-curly-brace',
+    ']': 'right-curly-brace',
+    '\\': 'pipe',
+    'CapsLock': 'caps-lock',
+    ';': 'semicolon',
+    "'": 'double-quotes',
+    'Enter': 'enter',
+    'Shift': 'shift-left',
+    ',': 'left-angle-bracket',
+    '.': 'right-angle-bracket',
+    '/': 'question-mark',
+    'Control': 'ctrl-left',
+    'Meta': 'win-right',
+    'Alt': 'alt-left',
+    ' ': 'space',
+
+    // right side keys
+    'Alt-R': 'alt-right',
+    'Control-R': 'ctrl-right',
+    'Shift-R': 'shift-right',
+    'Meta-R': 'win-right'
+};

@@ -1,6 +1,6 @@
 import { appendNextSiblingChild} from "./utils.mjs";
 
-export const MAX_WORDS_IN_ONE_LINE = 13;
+export const MAX_WORDS_IN_ONE_LINE = 12;
 export const MAX_LINES_IN_ONE_PARA = 5;
 
 const SPACE_UNICODE_VALUE = '\u00A0'

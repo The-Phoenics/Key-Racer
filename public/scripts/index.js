@@ -1,46 +1,18 @@
-import { makeLetterPending, isAlphabet } from "./utils.mjs";
+import { makeLetterPending, isAlphabet, KEY_CLASSNAMES_MAPPING } from "./utils.mjs";
 import { INFO, updateViewContentG } from "./validate.mjs";
+import { startTimer } from "./header.mjs";
 
-const classNames = {
-    '`': 'tilde',
-    '1': 'one',
-    '2': 'two',
-    '3': 'three',
-    '4': 'four',
-    '5': 'five',
-    '6': 'six',
-    '7': 'seven',
-    '8': 'eight',
-    '9': 'nine',
-    '0': 'zero',
-    '-': 'hyphen',
-    '=': 'plus',
-    'Backspace': 'backspace',
-    'Tab': 'tab',
-    '[': 'left-curly-brace',
-    ']': 'right-curly-brace',
-    '\\': 'pipe',
-    'CapsLock': 'caps-lock',
-    ';': 'semicolon',
-    "'": 'double-quotes',
-    'Enter': 'enter',
-    'Shift': 'shift-left',
-    ',': 'left-angle-bracket',
-    '.': 'right-angle-bracket',
-    '/': 'question-mark',
-    'Control': 'ctrl-left',
-    'Meta': 'win-right',
-    'Alt': 'alt-left',
-    ' ': 'space',
+let has_started = false;
+function start_timer_on_key_press() {
+    if (!has_started) {
+        startTimer();
+    }
+    has_started = true
+}
 
-    // right side keys
-    'Alt-R': 'alt-right',
-    'Control-R': 'ctrl-right',
-    'Shift-R': 'shift-right',
-    'Meta-R': 'win-right'
-};
-
-// Keyboard event listeners
+/*
+* Keyboard event listeners
+*/
 window.addEventListener('keyup', (event) => {
     const pressedKey = event.key
     const pressedKeyLocation = event.location
@@ -50,6 +22,7 @@ window.addEventListener('keyup', (event) => {
 });
 
 window.addEventListener('keydown', (event) => {
+    start_timer_on_key_press()
     const pressedKey = event.key
     const pressedKeyLocation = event.location
     
@@ -92,8 +65,8 @@ function updateKeyboardOnKeyPressOnKeyUp(pressedKeyStr, keyUpEventLocation) {
     } else {
         if (keyUpEventLocation == 2)
             pressedKeyStr = pressedKeyStr + '-R'
-        if (classNames[pressedKeyStr] != undefined) {
-            onKeyPress(classNames[pressedKeyStr])
+        if (KEY_CLASSNAMES_MAPPING[pressedKeyStr] != undefined) {
+            onKeyPress(KEY_CLASSNAMES_MAPPING[pressedKeyStr])
         }
     }
 }
@@ -104,13 +77,15 @@ function updateKeyboardOnKeyPressOnKeyDown(pressedKeyStr, keyUpEventLocation) {
     } else {
         if (keyUpEventLocation == 2)
             pressedKeyStr = pressedKeyStr + '-R'
-        if (classNames[pressedKeyStr] != undefined) {
-            document.querySelector('.' + classNames[pressedKeyStr]).classList.add("clicked");
+        if (KEY_CLASSNAMES_MAPPING[pressedKeyStr] != undefined) {
+            document.querySelector('.' + KEY_CLASSNAMES_MAPPING[pressedKeyStr]).classList.add("clicked");
         }
     }
 }
 
-// Backspace
+/* 
+* Backspace key press update
+*/ 
 function updateOnBackSpace() {
     if (!INFO.isAtFirstLetterFirstLine()) {
         if (INFO.isAtFirstLetterOfCurrentLine()) {
@@ -138,26 +113,4 @@ document.querySelectorAll(".key").forEach((keyElement) => {
     keyElement.addEventListener('click', function () {
         keyClickEffect(this)
     });
-});
-
-// Update word per minute speed
-const wpmElement = document.querySelector('.speed-info')
-const timerElement = document.querySelector('.time-txt')
-
-function updateWPM() {
-    wpmElement.innerText = calculateWPM() 
-}
-setInterval(() => updateWPM(), 2000);
-
-function calculateWPM() {
-    const elapsedTimeInSeconds = parseInt(timerElement.innerText)
-    const wordsTyped = INFO.getWordsTyped();
-    const lettersTyped = INFO.getLettersTyped();
-    const wpmSpeed = Math.round((wordsTyped) / (elapsedTimeInSeconds / 60));
-    return wpmSpeed
-}
-
-// Update timer
-setInterval(() => {
-    timerElement.innerText = parseInt(timerElement.innerText) + 1
-}, 1000)
+})

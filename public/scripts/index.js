@@ -40,20 +40,31 @@ window.addEventListener('keyup', (event) => {
 
 window.addEventListener('keydown', (event) => {
     start_timer_on_key_press()
-    const pressedKey = event.key
     const pressedKeyLocation = event.location
-    
-    if (pressedKey == 'Backspace') {
-        updateOnBackSpace()
+    const pressedKey = event.key
+
+    if (pressedKey == 'p') {
+        console.log(`cLetter: ${INFO.currentLetter}   cWord: ${INFO.currentWord}   cline: ${INFO.currentLine}`)
+        console.log('cLetterE: ', INFO.currentLetterElement)
+        console.log('cWordE:   ', INFO.currentWordElement)
     }
+    else {
+        if (pressedKey == 'Backspace') {
+            updateOnBackSpace()
+        }
 
-    // highlighting the keyboard keys
-    updateKeyboardOnKeyPressOnKeyDown(pressedKey, pressedKeyLocation);
+        if (pressedKey == ' ') {
+            updateOnSpacePress(pressedKey);
+        }
 
-    // update the view's text with validation
-    const pressedKeyValue = evaluateKeyPressedValue(pressedKey)
-    if (pressedKeyValue)
-        updateViewContentG(pressedKeyValue);
+        // highlighting the keyboard keys
+        updateKeyboardOnKeyPressOnKeyDown(pressedKey, pressedKeyLocation);
+
+        // update the view's text with validation
+        const pressedKeyValue = evaluateKeyPressedValue(pressedKey)
+        if (pressedKeyValue)
+            updateViewContentG(pressedKeyValue);
+    }
 });
 
 function onKeyPress(className) {
@@ -61,6 +72,12 @@ function onKeyPress(className) {
     const element = document.querySelector(keyClassSelector);
     keyClickEffect(element);
 }
+
+setInterval(() => {
+    if (INFO.isAtLastLetterOfWord()) {
+        console.log('at space')
+    }
+}, 100);
 
 function keyClickEffect(element) {
     element.classList.add("clicked");
@@ -100,9 +117,9 @@ function updateKeyboardOnKeyPressOnKeyDown(pressedKeyStr, keyUpEventLocation) {
     }
 }
 
-/* 
+/*
 * Backspace key press update
-*/ 
+*/
 function updateOnBackSpace() {
     if (!INFO.isAtFirstLetterFirstLine()) {
         if (INFO.isAtFirstLetterOfCurrentLine()) {
@@ -122,6 +139,13 @@ function updateOnBackSpace() {
             // reduce the letters typed count
             INFO.lettersTypedCount--
         }
+    }
+}
+
+function updateOnSpacePress() {
+    console.log('space pressed');
+    if (INFO.isAtSpaceElement()) {
+        console.log('at space')
     }
 }
 

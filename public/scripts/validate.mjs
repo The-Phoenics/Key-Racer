@@ -42,8 +42,26 @@ export const INFO = {
         return this.currentLetter == 0
     },
 
+    isAtLastLetterOfWord: function () {
+        return this.currentLetter == this.currentWordElement.length - 1
+    },
+
+    isAtLastWordOfLine: function () {
+        return this.currentWord == this.wordsInCurrentLine - 1
+    },
+
+    isAtSpaceElement: function () {
+        // return !this.isAtLastWordOfLine() &&
+        //     !this.isAtFirstLetterFirstLine() &&
+        //     this.isAtFirstLetterOfWord()
+        
+        return this.isAtLastLetterOfWord()
+    },
+
     updateCurrentWordElement: function () {
         this.wordsInCurrentLine = this.currentLineElement.childNodes.length
+        // subtract the number of space node elements count
+        this.wordsInCurrentLine = this.wordsInCurrentLine - 1
         this.currentWordElement = this.currentLineElement.childNodes[INFO.currentWord];
         this.lettersInCurrentWord = this.currentWordElement.childNodes.length
     },

@@ -86,6 +86,12 @@ span {
     color: rgb(255, 30, 30);
 }
 
+/* styling for incorrect space circle node elements */
+.incorrect-space {
+    background-color: rgb(255, 30, 30);
+    opacity: 60%;
+}
+
 /* dark theme styling */
 html {
     background-color: var(--bg-color);

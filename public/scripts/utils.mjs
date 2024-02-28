@@ -37,6 +37,15 @@ export function onIncorrect(letterElement) {
         console.log('Invalid letter element!')
 }
 
+export function onIncorrectSpacePress(letterElement) {
+    if (letterElement) {
+        letterElement.classList.add('incorrect-space')
+        INFO.updateCurrentLetter()
+    }
+    else
+        console.log('Invalid space element!')
+}
+
 export function makeLetterPending(letterElement) {
     if (letterElement) {
         letterElement.classList.add('pending')

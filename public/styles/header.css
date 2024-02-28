@@ -11,14 +11,18 @@
 * Header parent contains header
 */
 #header-parent {
+    /* padding: 15px 5px; */
+    height: 15vh;
 }
 
 .header {
-    height: var(--view-top-margin);
+    height: 100%;
+    /* height: var(--view-top-margin); */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 7%;
+    /* padding: 2em; */
     font-size: var(--wpm-font-size);
 }
 

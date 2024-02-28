@@ -18,7 +18,7 @@
 /* parent division for text portion */
 #view {
     margin: 20px auto;
-    padding: 30px 20px;
+    padding: 1em 20px;
     font-family: 'Titillium Web', sans-serif;
 }
 
@@ -67,7 +67,6 @@ span {
     color: rgb(255, 30, 30);
 }
 
-
 /* dark theme styling */
 html {
     background-color: var(--bg-color);
@@ -75,6 +74,7 @@ html {
 
 #parent-container {
     background-color: var(--bg-color);
+    margin-bottom: 20px;
 }
 
 #header {
@@ -83,4 +83,23 @@ html {
 
 span {
     color: var(--text-color);
+}
+
+/*
+* Responsive
+*/
+@media (max-width: 744px) {
+    #root {
+        width: 95%;
+    }
+    
+    .content {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (min-width: 745px) {
+    #keyboard {
+        scale: 0.7;
+    }
 }

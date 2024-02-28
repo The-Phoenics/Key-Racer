@@ -18,7 +18,6 @@ function clearNodes(contentNode) {
     }
 }
 
-
 window.onload = () => {
     changeViewText(contentValue)
     initLinesDataG()

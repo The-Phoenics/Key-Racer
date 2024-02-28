@@ -1,4 +1,6 @@
-export const MAX_WORDS_IN_ONE_LINE = 15;
+import { appendNextSiblingChild} from "./utils.mjs";
+
+export const MAX_WORDS_IN_ONE_LINE = 13;
 export const MAX_LINES_IN_ONE_PARA = 5;
 
 const SPACE_UNICODE_VALUE = '\u00A0'
@@ -25,6 +27,8 @@ export function generateNodesForContent(contentTxtElement, contentValue) {
             const letterArray = wordsArray[j].split('');
             createLetterNodesFromWord(letterArray, wordElement)
         }
+        // remove space node element at the end of line
+        lineElement.removeChild(lineElement.lastChild);
         contentTxtElement.appendChild(lineElement);
     }
 }
@@ -34,7 +38,10 @@ function createLetterNodesFromWord(letterArray, wordNodeElement) {
         let letterElement = getLetterElement()
         if (letterIndex === letterArray.length - 1) {
             // add white space at end of last letter
-            letter += SPACE_UNICODE_VALUE
+            // letter += SPACE_UNICODE_VALUE
+
+            // add space circle element
+            appendNextSiblingChild(getSpaceElement(), wordNodeElement);
         }
         letterElement.innerText = letter;
         // add letter node element to parent word element
@@ -62,4 +69,17 @@ function getLineElement() {
     const lineElement = document.createElement('div');
     lineElement.classList.add('line');
     return lineElement;
+}
+
+function getSpaceElement() {
+    // space circle element node    
+    const spaceElement = document.createElement('span');
+    spaceElement.classList.add('space-element');
+
+    const spaceCircleElement = document.createElement('span');
+    spaceCircleElement.classList.add('space-circle');
+    spaceCircleElement.classList.add('pending');
+    
+    spaceElement.appendChild(spaceCircleElement)
+    return spaceElement;
 }

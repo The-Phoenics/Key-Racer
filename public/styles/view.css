@@ -50,6 +50,25 @@ span {
     align-items: center;
 }
 
+/* Styling for the space element */
+.space-element {
+    /* border: 1px solid red; */
+    padding-top: 0.2em;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    height: 100%;
+    /* aspect-ratio: 2 / 2; */
+}
+
+.space-circle {
+    /* margin: auto; */
+    /* aspect-ratio: 1 / 1; */
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;    
+    background-color: var(--text-color);
+}
+
 /* letter styling when its not reached yed */
 .pending {
     color: var(--text-color);
@@ -84,7 +103,6 @@ html {
 span {
     color: var(--text-color);
 }
-
 /*
 * Responsive
 */

@@ -1,6 +1,14 @@
 import { INFO } from "./validate.mjs"
 import { RANDOM_WORDS_ARRAY } from "./words.mjs"
 
+export function appendNextSiblingChild(nodeToAppend, existingNode) {
+    if (existingNode.nextSibling) {
+        existingNode.parentNode.insertBefore(nodeToAppend, existingNode.nextSibling);
+    } else {
+        existingNode.parentNode.appendChild(nodeToAppend);
+    }
+}
+
 export function isAlphabet(character) {
     return character >= 'a' && character <= 'z'
 }

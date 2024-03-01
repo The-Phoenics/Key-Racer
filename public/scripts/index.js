@@ -1,4 +1,4 @@
-import { makeLetterPending, isAlphabet, KEY_CLASSNAMES_MAPPING } from "./utils.mjs";
+import { makeLetterPending, isAlphabet, KEY_CLASSNAMES_MAPPING, onCorrectSpace } from "./utils.mjs";
 import { INFO, updateViewContentG } from "./validate.mjs";
 import { startTimer } from "./header.mjs";
 import { randomParagraph, removeAllChildNodes } from "./utils.mjs";
@@ -30,41 +30,27 @@ window.onload = () => {
 /*
 * Keyboard event listeners
 */
-window.addEventListener('keyup', (event) => {
-    const pressedKey = event.key
-    const pressedKeyLocation = event.location
-
-    // highlighting the keyboard keys
-    updateKeyboardOnKeyPressOnKeyUp(pressedKey, pressedKeyLocation);
-});
-
 window.addEventListener('keydown', (event) => {
     start_timer_on_key_press()
     const pressedKeyLocation = event.location
     const pressedKey = event.key
+    event.preventDefault()
 
-    if (pressedKey == 'p') {
-        console.log(`cLetter: ${INFO.currentLetter}   cWord: ${INFO.currentWord}   cline: ${INFO.currentLine}`)
-        console.log('cLetterE: ', INFO.currentLetterElement)
-        console.log('cWordE:   ', INFO.currentWordElement)
+    if (pressedKey == 'Backspace') {
+        updateOnBackSpace()
+    }
+    else if (pressedKey == ' ') {
+        updateOnSpacePress(pressedKey);
     }
     else {
-        if (pressedKey == 'Backspace') {
-            updateOnBackSpace()
-        }
-
-        if (pressedKey == ' ') {
-            updateOnSpacePress(pressedKey);
-        }
-
-        // highlighting the keyboard keys
-        updateKeyboardOnKeyPressOnKeyDown(pressedKey, pressedKeyLocation);
-
         // update the view's text with validation
         const pressedKeyValue = evaluateKeyPressedValue(pressedKey)
         if (pressedKeyValue)
-            updateViewContentG(pressedKeyValue);
+            updateViewContentG(pressedKeyValue.trim());
     }
+
+    // highlighting the keyboard keys
+    updateKeyboardOnKeyPressOnKeyDown(pressedKey, pressedKeyLocation);
 });
 
 function onKeyPress(className) {
@@ -72,12 +58,6 @@ function onKeyPress(className) {
     const element = document.querySelector(keyClassSelector);
     keyClickEffect(element);
 }
-
-setInterval(() => {
-    if (INFO.isAtLastLetterOfWord()) {
-        console.log('at space')
-    }
-}, 100);
 
 function keyClickEffect(element) {
     element.classList.add("clicked");
@@ -129,23 +109,28 @@ function updateOnBackSpace() {
             INFO.currentWord--
             INFO.updateCurrentWordElement()
             INFO.currentLetter = INFO.lettersInCurrentWord - 1
+            INFO.updateCurrentLetterElement()
             makeLetterPending(INFO.currentWordElement.childNodes[INFO.currentLetter])
-            // reduce the words typed count
-            INFO.wordsTypedCount--
+
+            // change styling of the space element to pending
+            if (INFO.currentWordElement.classList.contains('space-element')) {
+                INFO.currentWordElement.childNodes[0].classList.remove('incorrect-space')
+                makeLetterPending(INFO.currentWordElement.childNodes[INFO.currentLetter])
+            }
         }
         else {
             INFO.currentLetter--
             makeLetterPending(INFO.currentWordElement.childNodes[INFO.currentLetter])
             // reduce the letters typed count
+            INFO.updateCurrentLetterElement()
             INFO.lettersTypedCount--
         }
     }
 }
 
 function updateOnSpacePress() {
-    console.log('space pressed');
     if (INFO.isAtSpaceElement()) {
-        console.log('at space')
+        onCorrectSpace(INFO.currentWordElement.childNodes[0])
     }
 }
 

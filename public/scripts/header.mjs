@@ -33,7 +33,9 @@ function calculateWPM() {
     // const lettersTyped = INFO.getLettersTyped();
     if (elapsedTimeInSeconds != 0) {
         const wpmSpeed = Math.round((wordsTyped) / (elapsedTimeInSeconds / 60));
-        return wpmSpeed
+        if (wpmSpeed > 0) {
+            return wpmSpeed;
+        }
     }
     return 0;
 }

@@ -1,4 +1,4 @@
-import { INFO } from "./validate.mjs"
+import { INFO, initInfoDataG } from "./validate.mjs"
 import { RANDOM_WORDS_ARRAY } from "./words.mjs"
 
 export function appendNextSiblingChild(nodeToAppend, existingNode) {
@@ -37,13 +37,32 @@ export function onIncorrect(letterElement) {
         console.log('Invalid letter element!')
 }
 
-export function onIncorrectSpacePress(letterElement) {
-    if (letterElement) {
-        letterElement.classList.add('incorrect-space')
-        INFO.updateCurrentLetter()
+// on correct for space press
+export function onCorrectSpace(spaceElement) {
+    if (spaceElement) {
+        spaceElement.classList.add('correct')
+        // INFO.updateCurrentLetter()
+        INFO.currentLetter = 0
+        INFO.currentWord++
+        INFO.updateCurrentWordElement()
+        initInfoDataG()
     }
     else
-        console.log('Invalid space element!')
+        console.log('Invalid letter element!')
+}
+
+// on incorrect for space press
+export function onIncorrectSpace(spaceElement) {
+    if (spaceElement) {
+        spaceElement.classList.add('incorrect-space')
+        // INFO.updateCurrentLetter()
+        INFO.currentLetter = 0
+        INFO.currentWord++
+        INFO.updateCurrentWordElement()
+        initInfoDataG()
+    }
+    else
+        console.log('Invalid letter element!')
 }
 
 export function makeLetterPending(letterElement) {

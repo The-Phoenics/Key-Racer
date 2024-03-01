@@ -3,8 +3,6 @@ import { appendNextSiblingChild} from "./utils.mjs";
 export const MAX_WORDS_IN_ONE_LINE = 12;
 export const MAX_LINES_IN_ONE_PARA = 5;
 
-const SPACE_UNICODE_VALUE = '\u00A0'
-
 export function generateNodesForContent(contentTxtElement, contentValue) {
     // array of lines
     const linesArray = contentValue.split('\n');    
@@ -37,9 +35,6 @@ function createLetterNodesFromWord(letterArray, wordNodeElement) {
     letterArray.forEach((letter, letterIndex) => {
         let letterElement = getLetterElement()
         if (letterIndex === letterArray.length - 1) {
-            // add white space at end of last letter
-            // letter += SPACE_UNICODE_VALUE
-
             // add space circle element
             appendNextSiblingChild(getSpaceElement(), wordNodeElement);
         }

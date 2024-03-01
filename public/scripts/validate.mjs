@@ -1,5 +1,5 @@
-import { MAX_LINES_IN_ONE_PARA, MAX_WORDS_IN_ONE_LINE } from "./nodeGenerator.mjs"
-import { onCorrect, onIncorrect, randomParagraph, removeAllChildNodes } from "./utils.mjs"
+import { MAX_LINES_IN_ONE_PARA, MAX_WORDS_IN_ONE_LINE, generateNodesForContent } from "./nodeGenerator.mjs"
+import { onCorrect, onIncorrect, onIncorrectSpace, randomParagraph, removeAllChildNodes } from "./utils.mjs"
 
 export const INFO = {
     currentLine: 0,
@@ -22,9 +22,9 @@ export const INFO = {
     lettersTypedCount: 0,
 
     hasFinished: function () {
-        return this.currentLetter == this.lettersInCurrentWord &&
-            this.currentWord + 1 == this.wordsInCurrentLine &&
-            this.currentLine + 1 == this.numOfLines
+        return this.currentLetter + 1 >= this.lettersInCurrentWord &&
+            this.currentWord + 1 >= this.wordsInCurrentLine &&
+            this.currentLine + 1 >= this.numOfLines
     },
 
     isAtFirstLetterFirstLine: function () {
@@ -51,11 +51,7 @@ export const INFO = {
     },
 
     isAtSpaceElement: function () {
-        // return !this.isAtLastWordOfLine() &&
-        //     !this.isAtFirstLetterFirstLine() &&
-        //     this.isAtFirstLetterOfWord()
-        
-        return this.isAtLastLetterOfWord()
+        return !(this.currentWord % 2 == 0) && this.currentWord != 0;
     },
 
     updateCurrentWordElement: function () {
@@ -67,7 +63,7 @@ export const INFO = {
     },
 
     updateCurrentLetterElement: function () {
-        this.currentLineElement = this.linesNodeList[INFO.currentLine]
+        INFO.currentLetterElement = INFO.currentWordElement.childNodes[INFO.currentLetter]
     },
 
     updateCurrentLetter: function () {
@@ -102,8 +98,8 @@ export function initInfoDataG() {
 // Function for updateing the content text on the basis of validation
 export function updateViewContentG(keyPressedCharacter) {
     if (!INFO.hasFinished()) {
-        updateInfo()
         validate(keyPressedCharacter)
+        updateInfo()
     } else {
         resetInfo()
         let contentTextVal = randomParagraph(MAX_WORDS_IN_ONE_LINE, MAX_LINES_IN_ONE_PARA)
@@ -133,24 +129,31 @@ function updateInfo() {
     }
     // go to next line
     if (INFO.wordsInCurrentLine == INFO.currentWord) {
-        INFO.currentWord = 0
-        INFO.currentLine++
-        INFO.wordsTypedCount++
-        // update the letters typed count
-        INFO.lettersTypedCount++
+        if (INFO.currentLine != INFO.numOfLines - 1) {
+            INFO.currentWord = 0
+            INFO.currentLine++
+            INFO.wordsTypedCount++
+            // update the letters typed count
+            INFO.lettersTypedCount++
+        }
     }
     if (INFO.linesNodeList.length == 0) {
         console.log(`There are no lines in content!`)
     } else {
-        initLinesDataG()
-        initInfoDataG()
+        if (!INFO.hasFinished()) {
+            initInfoDataG()
+        }
     }
 }
 
 function validate(pressedKeyChar) {
-    let currentLetter = INFO.currentLetterElement.innerText.trim()
-    if (pressedKeyChar == currentLetter)
-        onCorrect(INFO.currentLetterElement)
-    else
-        onIncorrect(INFO.currentLetterElement)
+    if (INFO.isAtSpaceElement()) {
+        onIncorrectSpace(INFO.currentWordElement.childNodes[0])
+    } else {
+        let currentLetter = INFO.currentLetterElement.innerText.trim()
+        if (pressedKeyChar == currentLetter)
+            onCorrect(INFO.currentLetterElement)
+        else
+            onIncorrect(INFO.currentLetterElement)
+    }
 }

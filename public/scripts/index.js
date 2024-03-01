@@ -30,6 +30,14 @@ window.onload = () => {
 /*
 * Keyboard event listeners
 */
+window.addEventListener('keyup', (event) => {
+    const pressedKey = event.key
+    const pressedKeyLocation = event.location
+
+    // highlighting the keyboard keys
+    updateKeyboardOnKeyPressOnKeyUp(pressedKey, pressedKeyLocation);
+});
+
 window.addEventListener('keydown', (event) => {
     start_timer_on_key_press()
     const pressedKeyLocation = event.location

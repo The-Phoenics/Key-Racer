@@ -5,6 +5,8 @@ import { randomParagraph, removeAllChildNodes } from "./utils.mjs";
 import { MAX_LINES_IN_ONE_PARA, MAX_WORDS_IN_ONE_LINE, generateNodesForContent } from "./nodeGenerator.mjs";
 import { initInfoDataG, initLinesDataG } from "./validate.mjs";
 
+import { playKeyPressAudio } from "./utils.mjs";
+
 let has_started = false;
 function start_timer_on_key_press() {
     if (!has_started) {
@@ -42,13 +44,13 @@ window.addEventListener('keydown', (event) => {
     start_timer_on_key_press()
     const pressedKeyLocation = event.location
     const pressedKey = event.key
-    event.preventDefault()
-
+    
     if (pressedKey == 'Backspace') {
         updateOnBackSpace()
     }
     else if (pressedKey == ' ') {
         updateOnSpacePress(pressedKey);
+        event.preventDefault()
     }
     else {
         // update the view's text with validation
@@ -134,11 +136,14 @@ function updateOnBackSpace() {
             INFO.lettersTypedCount--
         }
     }
+    INFO.currentLetterElement.classList.remove('correct-caret');
+    INFO.currentLetterElement.classList.remove('incorrect-caret');
 }
 
 function updateOnSpacePress() {
     if (INFO.isAtSpaceElement()) {
         onCorrectSpace(INFO.currentWordElement.childNodes[0])
+        playKeyPressAudio();
     }
 }
 

@@ -5,14 +5,20 @@
     --sub-color: #646669;
     --sub-alt-color: #2c2e31;
     --text-color: #d1d0c5;
+    /* --text-color: #00ff00; */
     --error-color: #ca4754;
     --error-extra-color: #7e2a33;
     --colorful-error-color: #ca4754;
     --colorful-error-extra-color: #7e2a33;
 }
 
-.caret {
+/* caret styling */
+.correct-caret {
     border-bottom: 3px solid var(--caret-color);
+}
+
+.incorrect-caret {
+    /* border-bottom: 3px solid red; */
 }
 
 /* parent division for text portion */
@@ -29,6 +35,12 @@
 
 .letter {
     color: var(--sub-alt-color);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .line {

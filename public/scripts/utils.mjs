@@ -1,6 +1,18 @@
 import { INFO, initInfoDataG } from "./validate.mjs"
 import { RANDOM_WORDS_ARRAY } from "./words.mjs"
 
+export function playKeyPressAudio() {
+    let audio = new Audio('key-click.mp3');
+    audio.volume = 0.1
+    audio.play();
+}
+
+export function playIncorrectKeyPressAudio() {
+    let audio = new Audio('incorrect-click.mp3');
+    audio.volume = 0.1
+    audio.play();
+}
+
 export function appendNextSiblingChild(nodeToAppend, existingNode) {
     if (existingNode.nextSibling) {
         existingNode.parentNode.insertBefore(nodeToAppend, existingNode.nextSibling);
@@ -22,6 +34,7 @@ export function isAlphabet(character) {
 export function onCorrect(letterElement) {
     if (letterElement) {
         letterElement.classList.add('correct')
+        INFO.currentLetterElement.classList.add('correct-caret')
         INFO.updateCurrentLetter()
     }
     else
@@ -31,7 +44,9 @@ export function onCorrect(letterElement) {
 export function onIncorrect(letterElement) {
     if (letterElement) {
         letterElement.classList.add('incorrect')
+        letterElement.classList.add('incorrect-caret')
         INFO.updateCurrentLetter()
+        playIncorrectKeyPressAudio();
     }
     else
         console.log('Invalid letter element!')

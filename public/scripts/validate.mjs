@@ -1,5 +1,5 @@
 import { MAX_LINES_IN_ONE_PARA, MAX_WORDS_IN_ONE_LINE, generateNodesForContent } from "./nodeGenerator.mjs"
-import { onCorrect, onIncorrect, onIncorrectSpace, randomParagraph, removeAllChildNodes } from "./utils.mjs"
+import { onCorrect, onIncorrect, onIncorrectSpace, playIncorrectKeyPressAudio, playKeyPressAudio, randomParagraph, removeAllChildNodes } from "./utils.mjs"
 
 export const INFO = {
     currentLine: 0,
@@ -149,10 +149,13 @@ function updateInfo() {
 function validate(pressedKeyChar) {
     if (INFO.isAtSpaceElement()) {
         onIncorrectSpace(INFO.currentWordElement.childNodes[0])
+        playIncorrectKeyPressAudio();
     } else {
         let currentLetter = INFO.currentLetterElement.innerText.trim()
-        if (pressedKeyChar == currentLetter)
+        if (pressedKeyChar == currentLetter) {
             onCorrect(INFO.currentLetterElement)
+            playKeyPressAudio();
+        }
         else
             onIncorrect(INFO.currentLetterElement)
     }

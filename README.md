@@ -7,6 +7,8 @@
 
 ### Screenshots
 
-![key-racer](https://github.com/Karan-Semwal/Key-Racer/assets/96228962/21a70786-c6d8-4cf8-b1e7-55adb30e8960)
+
+![key-racer](https://github.com/Karan-Semwal/Key-Racer/assets/96228962/ebb6cada-d2c8-45d0-9f11-0aa95e8b5a1f)
+
 
 ---

@@ -25,7 +25,7 @@
 #view {
     margin: 20px auto;
     padding: 1em 20px;
-    font-family: 'Titillium Web', sans-serif;
+    /* font-family: 'Titillium Web', sans-serif; */
 }
 
 .content {
@@ -135,12 +135,6 @@ span {
     }
 }
 
-@media screen and (min-width: 745px) {
-    #keyboard {
-        scale: 0.7;
-    }
-}
-
 /* mobile */
 @media screen and (max-width: 400px) {
     #parent-container {
@@ -149,6 +143,7 @@ span {
 
     #keyboard {
         margin: 15px 0px;
+        padding: 6px 8px;
         scale: 1;
     }
 

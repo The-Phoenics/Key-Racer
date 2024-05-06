@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
+@font-face {
+    font-family: EnvyCodeNerdFont;
+    src: url("../res/EnvyCodeRNerdFontPropo-Italic.ttf");
+}
+
 :root {
     --grey: rgb(204, 204, 204);
     --keyboard-backg: rgb(238, 238, 238);
@@ -23,6 +28,7 @@ body {
     overflow: visible;
     position: relative;
     font-family: 'Poppins', sans-serif;
+    font-family: 'EnvyCodeNerdFont' sans-serif;
     background-color: var(--bg-color);
 }
 
@@ -45,8 +51,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 50px;
-    font-family: 'Poppins', sans-serif;
+    padding: 20px 5px;
     margin: auto;
     /*
     position: absolute;

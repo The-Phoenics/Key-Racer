@@ -4,8 +4,7 @@ import { startTimer } from "./header.mjs";
 import { randomParagraph, removeAllChildNodes } from "./utils.mjs";
 import { MAX_LINES_IN_ONE_PARA, MAX_WORDS_IN_ONE_LINE, generateNodesForContent } from "./nodeGenerator.mjs";
 import { initInfoDataG, initLinesDataG } from "./validate.mjs";
-
-import { playKeyPressAudio } from "./utils.mjs";
+import AUDIO from "./Audio.mjs";
 
 let has_started = false;
 function start_timer_on_key_press() {
@@ -19,6 +18,7 @@ function start_timer_on_key_press() {
 * Initalization
 */
 window.onload = () => {
+    AUDIO.init();
     // random paragraph for content
     let contentValue = randomParagraph(MAX_WORDS_IN_ONE_LINE, MAX_LINES_IN_ONE_PARA)
     removeAllChildNodes(document.querySelector('.content'))
@@ -143,7 +143,7 @@ function updateOnBackSpace() {
 function updateOnSpacePress() {
     if (INFO.isAtSpaceElement()) {
         onCorrectSpace(INFO.currentWordElement.childNodes[0])
-        playKeyPressAudio();
+        AUDIO.playCorrectKeyPressAudio();
     }
 }
 

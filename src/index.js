@@ -151,5 +151,16 @@ function updateOnSpacePress() {
 document.querySelectorAll(".key").forEach((keyElement) => {
     keyElement.addEventListener('click', function () {
         keyClickEffect(this)
+
+        const pressedKeyValue = this.innerText.toLowerCase().trim()
+        // console.log(pressedKeyValue)
+        if (pressedKeyValue === "backspace") {
+            updateOnBackSpace();
+        } else if (pressedKeyValue === "space") {
+            updateOnSpacePress(pressedKeyValue);
+        } 
+        else {
+            updateViewContentG(pressedKeyValue);
+        }
     });
 })
